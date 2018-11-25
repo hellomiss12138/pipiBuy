@@ -74,6 +74,7 @@ Vue.config.productionTip = false
 /* 导入组件 */
 import index from './components/index.vue';
 import details from './components/details.vue';
+import buyCar from './components/buyCar.vue';
 
 /* 路由规则 */
 let routes = [{
@@ -86,6 +87,10 @@ let routes = [{
   {
     path: '/details/:id',
     component: details,
+  },
+  {
+    path: '/buyCar',
+    component: buyCar,
   },
 ]
 

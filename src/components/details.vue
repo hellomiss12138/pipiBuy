@@ -316,6 +316,14 @@ export default {
 .inline-zoomer-zoomer-box {
   width: 510px;
 }
+
+.thumb-list img{
+    height: 100px;
+    width: 100px;
+}
+.control-box {
+    width: 15px;
+}
 </style>
 
 

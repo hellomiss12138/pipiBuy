@@ -16,7 +16,7 @@
                             <!-- 商品大图展示 -->
                             <div class="pic-box">
                                 <!-- 放大镜 -->
-                                <ProductZoomer
+                                <ProductZoomer v-if="images.normal_size"
                                   :base-images="images"
                                   :base-zoomer-options="zoomerOptions"
                                 />
@@ -203,6 +203,8 @@ export default {
         )
         .then(rep => {
           this.commodityData = rep.data.message;
+          /* 将图片数据添加到放大镜中 */
+          this.images.normal_size = [];
           this.commodityData.imglist.forEach(ele => {
             this.images.normal_size.push({
               id: ele.id,
@@ -287,6 +289,8 @@ export default {
       window.scrollTo(0, 0);
       /* 重新获取商品id */
       this.artID = this.$route.params;
+      /* 初始化图片放大镜 */
+      this.images.normal_size = "";
       /*初始化购买数量 */
       this.buyNum = 1;
       /* 初始化当前页码 */
@@ -306,7 +310,7 @@ export default {
 }
 
 .inline-zoomer-zoomer-box {
-  width: 510px ;
+  width: 510px;
 }
 </style>
 

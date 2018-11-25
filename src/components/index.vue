@@ -58,7 +58,7 @@
                                 </div>
                                 <div class="txt-box">
                                     <a href="/goods/show-98.html">{{item.title}}</a>
-                                    <span>{{item.add_time | shorttime }}</span>
+                                    <span>{{item.add_time | shortTime }}</span>
                                 </div>
                             </li>
                         </ul>
@@ -105,8 +105,6 @@
 </template>
 
 <script>
-/* 导入moment.js */
-import moment from "moment";
 
 /* 暴露出去 */
 export default {
@@ -141,12 +139,7 @@ export default {
       });
   },
   /* 私有过滤器 */
-  filters: {
-    /* 格式化日期 */
-    shorttime(value) {
-      return moment(value).format("YYYY年MM月DD日");
-    }
-  }
+
 };
 </script>
 

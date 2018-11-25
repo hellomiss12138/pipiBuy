@@ -15,13 +15,15 @@ import axios from 'axios';
 axios.defaults.baseURL = 'http://111.230.232.110:8899/';
 /* 加入到Vue原型中 */
 Vue.prototype.$axios = axios;
-
 /* 导入moment.js */
 import moment from "moment";
 /* 导入iview */
 import iView from 'iview';
 import 'iview/dist/styles/iview.css';
 Vue.use(iView);
+/* 导入放大镜插件 */
+import ProductZoomer from 'vue-product-zoomer'
+Vue.use(ProductZoomer)
 
 /* 导入vuex */
 import Vuex from 'vuex'

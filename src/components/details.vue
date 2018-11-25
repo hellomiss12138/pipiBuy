@@ -13,7 +13,14 @@
                 <div class="wrap-box">
                     <div class="left-925">
                         <div class="goods-box clearfix">
-                            <div class="pic-box"></div>
+                            <!-- 商品大图展示 -->
+                            <div class="pic-box">
+                                <!-- 放大镜 -->
+                                <ProductZoomer
+                                  :base-images="images"
+                                  :base-zoomer-options="zoomerOptions"
+                                />
+                            </div>
                             <div class="goods-spec">
                                 <h1>{{commodityData.goodsinfo.title}}</h1>
                                 <p class="subtitle">{{commodityData.goodsinfo.sub_title}}</p>
@@ -166,7 +173,25 @@ export default {
       /* 每页显示的条数 */
       pageSize: 6,
       /* 发表的评论 */
-      commentText: ""
+      commentText: "",
+      /* 放大镜图片 */
+      images: {
+        // required
+        normal_size: [
+          /* { id: "unique id", url: "image url" },
+          { id: "unique id", url: "image url" } */
+        ]
+      },
+      /* 放大镜的参数 */
+      zoomerOptions: {
+        zoomFactor: 4,
+        pane: "container-round",
+        hoverDelay: 300,
+        namespace: "inline-zoomer",
+        move_by_click: true,
+        scroll_items: 5,
+        choosed_thumb_border_color: "#bbdefb"
+      }
     };
   },
   methods: {
@@ -178,6 +203,12 @@ export default {
         )
         .then(rep => {
           this.commodityData = rep.data.message;
+          this.commodityData.imglist.forEach(ele => {
+            this.images.normal_size.push({
+              id: ele.id,
+              url: ele.thumb_path
+            });
+          });
         });
     },
     /* 获取评论数据 */
@@ -272,6 +303,10 @@ export default {
 <style>
 .goods-tab .tab-head ul li a {
   background-color: #fff;
+}
+
+.inline-zoomer-zoomer-box {
+  width: 510px ;
 }
 </style>
 

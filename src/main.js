@@ -31,11 +31,33 @@ Vue.use(Vuex)
 /* 实例化一个store对象 */
 const store = new Vuex.Store({
   state: {
-    count: 0
+    /* 购物车数据 格式: id(key):num(value) */
+    carData: JSON.parse(window.localStorage.getItem('heimaBBB')) || {}
   },
   mutations: {
-    increment(state) {
-      state.count++
+    /* 添加到购物车 */
+    add2Car(state, obj) {
+      /* 判断购物车是否含有此类商品 */
+      if (state.carData[obj.id]) {
+        /* 存在即增加数量 */
+        state.carData[obj.id] += obj.num;
+      } else {
+        /* 不存在即增加商品类别 */
+        /* state.carData[obj.id] = obj.num; */
+        // 如果是动态增加的属性 必须使用Vue.set才可以跟踪数据改变
+        // 参数1 对象 参数2 添加的属性名 参数3 属性的值
+        Vue.set(state.carData, obj.id, obj.num);
+      }
+    }
+  },
+  getters: {
+    /* 计算购物车商品数量 */
+    shopCarNum(state) {
+      let num = 0;
+      for (const key in state.carData) {
+        num += state.carData[key];
+      }
+      return num;
     }
   }
 })
@@ -80,3 +102,8 @@ new Vue({
   /* 将vuex加入Vue实例中 */
   store
 })
+
+/* 页面关闭时,将数据保存至本地存储 */
+window.onbeforeunload = function () {
+  window.localStorage.setItem('heimaBBB', JSON.stringify(store.state.carData));
+}

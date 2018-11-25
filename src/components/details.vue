@@ -47,7 +47,8 @@
                                         <dt>购买数量</dt>
                                         <dd>
                                             <div class="stock-box">
-                                                <el-input-number v-model="buyNum" @change="handleChange" :min="1" :max="10" label="描述文字"></el-input-number>
+                                                <!-- 计数器 -->
+                                                <el-input-number v-model="buyNum"  :min="1"  label="描述文字"></el-input-number>
                                                 </div>
                                             <span class="stock-txt">
                                                 库存
@@ -59,7 +60,10 @@
                                         <dd>
                                             <div id="buyButton" class="btn-buy">
                                                 <button onclick="cartAdd(this,'/',1,'/shopping.html');" class="buy">立即购买</button>
-                                                <button @click="$store.commit('increment')" class="add">加入购物车</button>
+                                                <button @click="$store.commit('add2Car',{
+                                                    id:artID.id,
+                                                    num:buyNum
+                                                })" class="add">加入购物车</button>
                                             </div>
                                         </dd>
                                     </dl>

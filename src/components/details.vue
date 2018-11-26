@@ -83,9 +83,8 @@
                                     </Affix>
                                 </ul>
                             </div>
-                            <div v-html="commodityData.goodsinfo.content" class="tab-content entry"  v-show="isShow==0">
-                                
-                            </div>
+                            <div v-html="commodityData.goodsinfo.content" class="tab-content entry"  v-show="isShow==0">                
+                           </div>
                             <div class="tab-content" v-show="isShow==1">
                                 <div class="comment-box">
                                     <div id="commentForm" name="commentForm"
@@ -317,12 +316,12 @@ export default {
   width: 510px;
 }
 
-.thumb-list img{
-    height: 100px;
-    width: 100px;
+.thumb-list img {
+  height: 100px;
+  width: 100px;
 }
 .control-box {
-    width: 15px;
+  width: 15px;
 }
 </style>
 

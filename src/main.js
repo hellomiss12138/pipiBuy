@@ -48,6 +48,16 @@ const store = new Vuex.Store({
         // 参数1 对象 参数2 添加的属性名 参数3 属性的值
         Vue.set(state.carData, obj.id, obj.num);
       }
+      /* 提示加入购物车成功 */
+      Vue.prototype.$message({
+        message: '恭喜你，加入购物车成功',
+        type: 'success'
+      });
+    },
+    /* 更新购物车数据 */
+    updateCar(state, obj) {
+      /* 更新购物车的数据 */
+      state.carData = obj;
     }
   },
   getters: {

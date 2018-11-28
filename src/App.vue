@@ -11,16 +11,16 @@
             <a target="_blank" href="#"></a>
           </div>
           <div id="menu" class="right-box">
-            <span style="display: none;">
-              <a href="" class="">登录</a>
+            <span v-show="$store.state.isLogin == false">
+              <router-link to="/login" class="">登录</router-link>
               <strong>|</strong>
               <a href="" class="">注册</a>
               <strong>|</strong>
             </span>
-            <span>
+            <span v-show="$store.state.isLogin == true">
               <a href="" class="">会员中心</a>
               <strong>|</strong>
-              <a>退出</a>
+              <a @click="loginout">退出</a>
               <strong>|</strong>
             </span>
             <!-- 购物车路由入口 -->
@@ -124,7 +124,25 @@
 
 <script>
 export default {
-  name: "app"
+  name: "app",
+  methods: {
+    /* 登出功能 */
+    loginout() {
+      this.$axios.get("site/account/logout").then(rep => {
+        console.log(rep);
+        if (rep.data.status === 0) {
+          /* 提示退出成功 */
+          this.$message({
+            message: "恭喜你，这是一条成功消息",
+            type: "success"
+          });
+          this.$store.state.isLogin = false;
+          /* 返回主页 */
+          this.$router.push("/index");
+        }
+      });
+    }
+  }
 };
 </script>
 

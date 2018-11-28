@@ -14,7 +14,7 @@ import axios from 'axios';
 /* 更改axios默认的基础地址 */
 axios.defaults.baseURL = 'http://111.230.232.110:8899/';
 /* 加入到Vue原型中 */
-axios.defaults.withCredentials=true;//让ajax携带cookie
+axios.defaults.withCredentials = true; //让ajax携带cookie
 Vue.prototype.$axios = axios;
 /* 导入moment.js */
 import moment from "moment";
@@ -33,7 +33,9 @@ Vue.use(Vuex)
 const store = new Vuex.Store({
   state: {
     /* 购物车数据 格式: id(key):num(value) */
-    carData: JSON.parse(window.localStorage.getItem('heimaBBB')) || {}
+    carData: JSON.parse(window.localStorage.getItem('heimaBBB')) || {},
+    /* 判断用户是否登录 */
+    isLogin: false
   },
   mutations: {
     /* 添加到购物车 */
@@ -124,7 +126,7 @@ let router = new VueRouter({
 router.beforeEach((to, from, next) => {
   /* 检查用户是否登录 */
   if (to.path == '/order') {
-    axios.get('site/account/islogin').then(rep => {    
+    axios.get('site/account/islogin').then(rep => {
       /* 未登录,跳转至登录页面 */
       if (rep.data.code == "nologin") {
         router.push('/login');
@@ -144,7 +146,16 @@ new Vue({
   /* 将路由加入Vue实例中 */
   router,
   /* 将vuex加入Vue实例中 */
-  store
+  store,
+  created() {
+    /* 判断用户是否登录 */
+    axios.get('site/account/islogin').then(rep => {
+      /* 未登录,跳转至登录页面 */
+      if (rep.data.code != "nologin") {
+        store.state.isLogin = true;
+      }
+    })
+  },
 })
 
 /* 页面关闭时,将数据保存至本地存储 */

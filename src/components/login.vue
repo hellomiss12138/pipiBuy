@@ -70,6 +70,7 @@ export default {
               message: "恭喜你,登录成功!!!",
               type: "success"
             });
+             this.$store.state.isLogin = true;
             /* 跳转到上一页 */
             this.$router.go(-1);
           } else {

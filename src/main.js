@@ -14,6 +14,7 @@ import axios from 'axios';
 /* 更改axios默认的基础地址 */
 axios.defaults.baseURL = 'http://111.230.232.110:8899/';
 /* 加入到Vue原型中 */
+axios.defaults.withCredentials=true;//让ajax携带cookie
 Vue.prototype.$axios = axios;
 /* 导入moment.js */
 import moment from "moment";
@@ -85,6 +86,8 @@ Vue.config.productionTip = false
 import index from './components/index.vue';
 import details from './components/details.vue';
 import buyCar from './components/buyCar.vue';
+import order from './components/order.vue';
+import login from './components/login.vue';
 
 /* 路由规则 */
 let routes = [{
@@ -102,11 +105,37 @@ let routes = [{
     path: '/buyCar',
     component: buyCar,
   },
+  {
+    path: '/order',
+    component: order,
+  },
+  {
+    path: '/login',
+    component: login,
+  },
 ]
 
 /* 创建路由实例 */
 let router = new VueRouter({
   routes
+})
+
+/* 导航守卫 */
+router.beforeEach((to, from, next) => {
+  /* 检查用户是否登录 */
+  if (to.path == '/order') {
+    axios.get('site/account/islogin').then(rep => {    
+      /* 未登录,跳转至登录页面 */
+      if (rep.data.code == "nologin") {
+        router.push('/login');
+      } else {
+        next();
+      }
+    })
+  } else {
+    next();
+  }
+
 })
 
 new Vue({

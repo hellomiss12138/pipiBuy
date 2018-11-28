@@ -109,7 +109,8 @@
                     <div class="cart-foot clearfix">
                         <div class="right-box">
                             <button class="button" onclick="javascript:location.href='/index.html';">继续购物</button>
-                            <button class="submit" onclick="formSubmit(this, '/', '/shopping.html');">立即结算</button>
+                            <button class="submit" type="button">
+                               <router-link to="/order">立即结算</router-link> </button>
                         </div>
                     </div>
                     <!--购物车底部-->
@@ -177,7 +178,7 @@ export default {
   watch: {
     // 深度 watcher 侦听商品数据改变
     shopList: {
-      handler: function(val, oldVal) {
+      handler: function(val) {
         /* 取出数据库中的值,生成一个 id(key):num(value)的对象 */
         let obj = {};
         val.forEach(v => {

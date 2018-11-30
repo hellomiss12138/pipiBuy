@@ -129,12 +129,10 @@ export default {
         this.toplist = rep.data.message.toplist;
         this.catelist = rep.data.message.catelist;
         this.sliderlist = rep.data.message.sliderlist;
-        console.dir(rep);
       });
     this.$axios
       .get("http://111.230.232.110:8899/site/goods/getgoodsgroup")
       .then(rep => {
-        console.log(rep);
         this.commodityListist = rep.data.message;
       });
   },

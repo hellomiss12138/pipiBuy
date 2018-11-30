@@ -129,7 +129,6 @@ export default {
     /* 登出功能 */
     loginout() {
       this.$axios.get("site/account/logout").then(rep => {
-        console.log(rep);
         if (rep.data.status === 0) {
           /* 提示退出成功 */
           this.$message({

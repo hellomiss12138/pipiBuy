@@ -8,7 +8,7 @@
                 <a href="/goods/42/1.html">商品详情</a>
             </div>
         </div>
-        <div class="section">
+        <div class="section" v-if="commodityData.goodsinfo">
             <div class="wrapper clearfix">
                 <div class="wrap-box">
                     <div class="left-925">
@@ -22,7 +22,7 @@
                                 />
                             </div>
                             <div class="goods-spec">
-                                <h1>{{commodityData.goodsinfo.title}}</h1>
+                                <h1 >{{commodityData.goodsinfo.title}}</h1>
                                 <p class="subtitle">{{commodityData.goodsinfo.sub_title}}</p>
                                 <div class="spec-box">
                                     <dl>

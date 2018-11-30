@@ -110,7 +110,7 @@
                         <div class="right-box">
                             <button class="button" onclick="javascript:location.href='/index.html';">继续购物</button>
                             <button class="submit" type="button">
-                               <router-link to="/order">立即结算</router-link> </button>
+                               <router-link :to="'/order/'+seleckedID">立即结算</router-link> </button>
                         </div>
                     </div>
                     <!--购物车底部-->
@@ -173,6 +173,17 @@ export default {
         }
       });
       return Num;
+    },
+    /* 计算选中的商品id */
+    seleckedID() {
+      let ids = "";
+      this.shopList.forEach(v => {
+        if (v.isChecked == true) {
+          ids += v.id + ",";
+        }
+      });
+      ids = ids.slice(0, ids.length - 1);
+      return ids;
     }
   },
   watch: {

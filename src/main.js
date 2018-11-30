@@ -26,6 +26,7 @@ Vue.use(iView);
 import ProductZoomer from 'vue-product-zoomer'
 Vue.use(ProductZoomer)
 
+
 /* 导入vuex */
 import Vuex from 'vuex'
 Vue.use(Vuex)
@@ -92,25 +93,37 @@ import order from './components/order.vue';
 import login from './components/login.vue';
 
 /* 路由规则 */
-let routes = [{
+let routes = [
+  /* 主页 */
+  {
     path: '/',
     redirect: '/index',
-  }, {
+  },
+  /* 主页 */
+  {
     path: '/index',
     component: index,
   },
+  /* 商品详情页 */
   {
     path: '/details/:id',
     component: details,
   },
+  /* 购物车 */
   {
     path: '/buyCar',
     component: buyCar,
   },
+  /* 订单结算 */
   {
-    path: '/order',
+    path: '/order/:ids',
     component: order,
+    /* 路由元信息 */
+    meta: {
+      isLogin: true
+    }
   },
+  /* 登录 */
   {
     path: '/login',
     component: login,
@@ -125,7 +138,7 @@ let router = new VueRouter({
 /* 导航守卫 */
 router.beforeEach((to, from, next) => {
   /* 检查用户是否登录 */
-  if (to.path == '/order') {
+  if (to.meta.isLogin) {
     axios.get('site/account/islogin').then(rep => {
       /* 未登录,跳转至登录页面 */
       if (rep.data.code == "nologin") {

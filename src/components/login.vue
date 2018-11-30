@@ -63,7 +63,6 @@ export default {
         })
         .then(rep => {
           /* 判断登录是否成功 */
-          console.log(rep);
           if (rep.data.status === 0) {
             /* 提示登录成功 */
             this.$message({

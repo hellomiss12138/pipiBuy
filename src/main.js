@@ -62,6 +62,10 @@ const store = new Vuex.Store({
     updateCar(state, obj) {
       /* 更新购物车的数据 */
       state.carData = obj;
+    },
+    /* 删除购物车数据 */
+    delCar(state, key) {
+      Vue.delete(state.carData, key);
     }
   },
   getters: {
@@ -91,6 +95,12 @@ import details from './components/details.vue';
 import buyCar from './components/buyCar.vue';
 import order from './components/order.vue';
 import login from './components/login.vue';
+import paymoney from './components/paymoney.vue';
+import paySuccess from './components/paySuccess.vue';
+import vipContent from './components/vipContent.vue';
+import vipIndex from './components/vipIndex.vue';
+import orderList from './components/orderList.vue';
+import orderDetails from './components/orderDetails.vue';
 
 /* 路由规则 */
 let routes = [
@@ -127,6 +137,50 @@ let routes = [
   {
     path: '/login',
     component: login,
+  },
+  /* 支付页面 */
+  {
+    path: '/paymoney/:orderid',
+    component: paymoney,
+    /* 路由元信息 */
+    meta: {
+      isLogin: true
+    }
+  },
+  /* 支付成功页面 */
+  {
+    path: '/paySuccess',
+    component: paySuccess,
+    /* 路由元信息 */
+    meta: {
+      isLogin: true
+    }
+  },
+  /* 会员中心 */
+  {
+    path: '/vipContent',
+    component: vipContent,
+    /* 路由元信息 */
+    meta: {
+      isLogin: true
+    },
+    children:[
+      /* 会员中心首页 */
+      {
+        path: 'vipIndex',
+        component: vipIndex,
+      },
+      /* 会员中心订单列表 */
+      {
+        path: 'orderList',
+        component: orderList,
+      },
+      /* 会员中心订单详情 */
+      {
+        path: 'orderDetails',
+        component: orderDetails,
+      },
+    ]
   },
 ]
 

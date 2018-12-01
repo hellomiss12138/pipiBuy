@@ -298,24 +298,25 @@ export default {
         if (valid) {
           /* 验证通过 */
           /* 提交表单 */
-          console.log(this.ruleForm);
-
           this.$axios
             .post("site/validate/order/setorder", this.ruleForm)
             .then(rep => {
-              console.log(rep);
               if (rep.data.status === 0) {
                 /* 订单提交成功 */
                 this.$message({
                   message: "订单提交成功",
                   type: "success"
                 });
+                /* 删除购物车数据 */
+                for (const key in this.ruleForm.cargoodsobj) {
+                  this.$store.commit("delCar", key);
+                }
                 /* 保存订单id */
-                let orderid = rep.data.message;
+                let orderid = rep.data.message.orderid;
                 /* 跳转至支付中心 */
                 this.$router.push(`/paymoney/${orderid}`);
-              }else{
-                  this.$message.error('订单提交失败,请重试!!!');
+              } else {
+                this.$message.error("订单提交失败,请重试!!!");
               }
             });
         } else {

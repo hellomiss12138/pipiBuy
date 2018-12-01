@@ -43,4 +43,11 @@ export default {};
 </script>
 
 <style>
+.avatar-box{
+  padding: 0;
+}
+
+.sub-tit{
+  padding: 0;
+}
 </style>

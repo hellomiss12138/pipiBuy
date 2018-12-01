@@ -164,21 +164,33 @@ let routes = [
     meta: {
       isLogin: true
     },
-    children:[
+    children: [
       /* 会员中心首页 */
       {
         path: 'vipIndex',
         component: vipIndex,
+        /* 路由元信息 */
+        meta: {
+          isLogin: true
+        },
       },
       /* 会员中心订单列表 */
       {
         path: 'orderList',
         component: orderList,
+        /* 路由元信息 */
+        meta: {
+          isLogin: true
+        },
       },
       /* 会员中心订单详情 */
       {
         path: 'orderDetails',
         component: orderDetails,
+        /* 路由元信息 */
+        meta: {
+          isLogin: true
+        },
       },
     ]
   },

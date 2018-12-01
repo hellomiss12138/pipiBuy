@@ -28,7 +28,7 @@
             <td align="left">{{item.complete_time | shortTime}}</td>
             <td align="left">{{item.statusName}}</td>
             <td align="left">
-              <router-link to="/vipContent/orderDetails">查看订单</router-link>
+              <router-link :to="'/vipContent/orderDetails/'+item.id">查看订单</router-link>
               <br>
               <router-link :to="'/paymoney/'+item.id" v-show="item.status==1">|去付款
                 <br>

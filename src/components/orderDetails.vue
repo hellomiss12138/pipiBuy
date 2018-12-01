@@ -12,19 +12,19 @@
     </div>
     <div class="order-progress">
       <ul>
-        <li class="first active">
+        <li class="first" :class="{active:orderInfo.status>=1}">
           <div class="progress">下单</div>
           <div class="info">2017-10-25 21:38:15</div>
         </li>
-        <li class>
+        <li :class="{active:orderInfo.status>=2}">
           <div class="progress">已付款</div>
           <div class="info">2017-10-25 21:38:15</div>
         </li>
-        <li class>
+        <li :class="{active:orderInfo.status>=3}">
           <div class="progress">已经发货</div>
           <div class="info">2017-10-25 21:38:15</div>
         </li>
-        <li class="last">
+        <li class="last" :class="{active:orderInfo.status>=4}">
           <div class="progress">已完成</div>
           <div class="info">2017-10-25 21:38:15</div>
         </li>
@@ -33,17 +33,17 @@
     <div class="form-box accept-box form-box1">
       <dl class="head form-group">
         <dd>
-          订单号：BD20171025213815752
-          <a href="#/site/goods/payment/12" class="btn-pay">去付款</a>
+          订单号：{{orderInfo.order_no}}
+          <router-link class="btn-pay" :to="'/paymoney/'+orderId" v-show="orderInfo.status==1">去付款</router-link>
           <!---->
         </dd>
       </dl>
       <dl class="form-group">
         <dt>订单状态：</dt>
-        <dd>待付款</dd>
+        <dd>{{orderInfo.statusName}}</dd>
       </dl>
       <dl class="form-group">
-        <dt>快递单号：</dt>
+        <dt>快递单号：444</dt>
         <dd></dd>
       </dl>
       <dl class="form-group">
@@ -61,33 +61,30 @@
             <th width="10%">数量</th>
             <th width="10%">金额</th>
           </tr>
-          <tr>
+          <tr v-for="(item) in orderList" :key="item.id">
             <td width="60">
-              <img
-                src="http://157.122.54.189:9095/upload/201504/20/201504200341260763.jpg"
-                class="img"
-              >
+              <img :src="item.imgurl" class="img">
             </td>
             <td align="left">
-              <a target="_blank" href="/goods/show-92.html">Apple iMac MF883CH/A 21.5英寸一体机电脑</a>
+              <a target="_blank" href="/goods/show-92.html">{{item.goods_title}}</a>
             </td>
             <td align="center">
-              <s>￥7200</s>
-              <p>￥7200</p>
+              <s>￥{{item.goods_price}}</s>
+              <p>￥{{item.real_price}}</p>
             </td>
-            <td align="center">1</td>
-            <td align="center">￥7200</td>
+            <td align="center">{{item.quantity}}</td>
+            <td align="center">￥{{item.goods_price*item.quantity}}</td>
           </tr>
           <tr>
             <td colspan="7" align="right">
               <p>
                 商品金额：
-                <b class="red">￥7200</b>&nbsp;&nbsp;+&nbsp;&nbsp;运费：
-                <b class="red">￥20</b>
+                <b class="red">￥{{goodsSum}}</b>&nbsp;&nbsp;+&nbsp;&nbsp;运费：
+                <b class="red">￥{{orderInfo.express_fee}}</b>
               </p>
               <p style="font-size: 22px;">
                 应付总金额：
-                <b class="red">￥7220</b>
+                <b class="red">￥{{goodsSum+orderInfo.express_fee}}</b>
               </p>
             </td>
           </tr>
@@ -100,19 +97,19 @@
       </dl>
       <dl class="form-group">
         <dt>顾客姓名：</dt>
-        <dd>ivanyb1212</dd>
+        <dd>{{orderInfo.accept_name}}</dd>
       </dl>
       <dl class="form-group">
         <dt>送货地址：</dt>
-        <dd>江西省,萍乡市,安源区 sdfsdf</dd>
+        <dd>{{orderInfo.area,orderInfo.address}}</dd>
       </dl>
       <dl class="form-group">
         <dt>联系电话：</dt>
-        <dd>13987766472</dd>
+        <dd>{{orderInfo.mobile}}</dd>
       </dl>
       <dl class="form-group">
         <dt>电子邮箱：</dt>
-        <dd></dd>
+        <dd>{{orderInfo.email}}</dd>
       </dl>
       <dl class="form-group">
         <dt>备注留言：</dt>
@@ -124,7 +121,37 @@
 
 <script>
 export default {
-    name:'orderDetails'
+  name: "orderDetails",
+  data() {
+    return {
+      /* 订单信息 */
+      orderInfo: {},
+      /* 订单商品列表 */
+      orderList: [],
+      /* 订单ID */
+      orderId: 0
+    };
+  },
+  computed: {
+    goodsSum() {
+      let sum = 0;
+      this.orderList.forEach(e => {
+        sum += e.goods_price * e.quantity;
+      });
+      return sum;
+    }
+  },
+  created() {
+    /* 获取订单ID */
+    this.orderId = this.$route.params.orderId;
+    /* 获取页面数据 */
+    this.$axios
+      .get(`site/validate/order/getorderdetial/${this.orderId}`)
+      .then(rep => {
+        this.orderList = rep.data.message.goodslist;
+        this.orderInfo = rep.data.message.orderinfo;
+      });
+  }
 };
 </script>
 

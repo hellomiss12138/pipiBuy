@@ -185,7 +185,7 @@ let routes = [
       },
       /* 会员中心订单详情 */
       {
-        path: 'orderDetails',
+        path: 'orderDetails/:orderId',
         component: orderDetails,
         /* 路由元信息 */
         meta: {

@@ -198,8 +198,20 @@ let routes = [
 
 /* 创建路由实例 */
 let router = new VueRouter({
-  routes
+  routes,
+  scrollBehavior(to, from, savedPosition) {
+    if (savedPosition) {
+      return savedPosition
+    } else {
+      return {
+        x: 0,
+        y: 0
+      }
+    }
+  }
 })
+
+
 
 /* 导航守卫 */
 router.beforeEach((to, from, next) => {
